@@ -1,0 +1,6 @@
+{
+  "whatsapp_numero_oficial": null,
+  "supabase_url": null,
+  "supabase_anon_key": null,
+  "nota": "Configurar integración segura con políticas RLS; nunca publicar credenciales privadas. El calendario solo refleja reservas confirmadas y con anticipo aprobado."
+}
