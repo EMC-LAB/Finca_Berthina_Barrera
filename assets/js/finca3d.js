@@ -4,8 +4,8 @@ const host=document.querySelector('#finca3d');
 if(host){
 const imgBase='../assets/img/';
 const zones={
- entrada:{label:'Portón',category:'public',pos:[-46,-25],h:1.5,title:'Entrada principal',desc:'Acceso desde la calle. El estacionamiento es sobre vía pública y debe verificarse antes de cada evento.',photo:'gate.webp',url:'../ubicacion/',action:'Cómo llegar'},
- capilla:{label:'Capilla',category:'public',pos:[-39,-9],h:6,title:'Capilla de Finca Berthina',desc:'Está cerca del portón, sobre el lado izquierdo del recorrido. Su uso para ceremonias se confirma con administración.',photo:'chapel_out.webp',url:'../espacios/capilla/',action:'Conocer la capilla'},
+ entrada:{label:'Portón',category:'public',pos:[-40,-9],h:1.5,title:'Entrada principal',desc:'Acceso desde la calle. El estacionamiento es sobre vía pública y debe verificarse antes de cada evento.',photo:'gate.webp',url:'../ubicacion/',action:'Cómo llegar'},
+ capilla:{label:'Capilla',category:'public',pos:[-46,-25],h:6,title:'Capilla de Finca Berthina',desc:'Está cerca del portón, sobre el lado izquierdo del recorrido. Su uso para ceremonias se confirma con administración.',photo:'chapel_out.webp',url:'../espacios/capilla/',action:'Conocer la capilla'},
  fuente:{label:'Fuente',category:'public',pos:[-22,-7],h:1.8,title:'Bifurcación y fuente',desc:'Aquí se separan los recorridos: camino para vehículos y sendero peatonal hacia jardín, alberca y salón.',photo:'garden_path.webp',url:'../galeria/',action:'Ver jardines'},
  alberca:{label:'Alberca',category:'closed',pos:[-13,-17],h:3.2,title:'Alberca en mantenimiento',desc:'En la ruta peatonal, antes de los baños. Actualmente vacía y fuera de servicio; NO se incluye en ninguna renta.',photo:'pool_maintenance.webp',url:'../galeria/',action:'Ver fotos reales'},
  banos:{label:'Baños H / M',category:'public',pos:[-3,-16],h:4.5,title:'Baños exteriores',desc:'Después del paso cercano a la alberca. Los sanitarios tienen servicio de agua y forman parte de la operación de eventos.',photo:'banos_h.webp',url:'../galeria/',action:'Ver galería'},
@@ -52,13 +52,16 @@ const lawn=new THREE.Mesh(new THREE.CylinderGeometry(22,22,.22,52),MAT.lawn);law
 function path(points,width=3.2,material=MAT.stone){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(p[0],.075,p[1])),false,'centripetal',.3);const pts=curve.getPoints(120);for(let i=0;i<pts.length-1;i++){const a=pts[i],b=pts[i+1],len=a.distanceTo(b);const mesh=box(width,.12,len+.18,material,(a.x+b.x)/2,.12,(a.z+b.z)/2);mesh.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);mesh.castShadow=false;}}
 path([[-52,-25],[-40,-23],[-31,-21],[-22,-7],[-14,0],[-12,17],[5,27],[30,27],[41,19],[41,6],[38,-2],[34,-7]],4.1);
 path([[-22,-7],[-19,-16],[-13,-20],[-4,-20],[5,-20],[25,-20],[36,-19],[42,-10]],2.1,MAT.path);
-// Entrance roadway and gate
+// Entrance avenue unchanged. Swap the two physical buildings and markers only.
+// Portón now occupies the former chapel point.
 path([[-52,-27],[-47,-27],[-42,-24]],6,MAT.path);
-box(.8,5,1.5,MAT.brick,-48,2.5,-26);box(.8,5,1.5,MAT.brick,-43,2.5,-25);box(4,3,.5,MAT.wood,-45.5,2,-25.5,'entrada');
-// Chapel near entrance, left side: small dome and two porch columns.
-box(8,4.7,8,MAT.brick,-40,2.35,-9,'capilla');dome(4.1,-40,4.8,-9,'capilla');cylinder(.7,.7,1.6,MAT.wall,-40,8.6,-9);dome(.72,-40,9.4,-9);
-for(const dx of [-2.9,2.9])cylinder(.4,.46,3.6,MAT.wall,-40+dx,2.0,-3.5);
-roof(-40,-3.4,7.5,3.9,1.75);
+box(.8,5,1.5,MAT.brick,-42.5,2.5,-9);box(.8,5,1.5,MAT.brick,-37.5,2.5,-9);
+box(4,3,.5,MAT.wood,-40,2,-9,'entrada');
+// Capilla now occupies the former gate point, retaining its original visual treatment.
+box(8,4.7,8,MAT.brick,-46,2.35,-25,'capilla');dome(4.1,-46,4.8,-25,'capilla');
+cylinder(.7,.7,1.6,MAT.wall,-46,8.6,-25);dome(.72,-46,9.4,-25);
+for(const dx of [-2.9,2.9])cylinder(.4,.46,3.6,MAT.wall,-46+dx,2.0,-19.5);
+roof(-46,-19.4,7.5,3.9,1.75);
 // Two non-rentable residences: anonymized on public map to protect owners.
 function privateHouse(x,z,w=9){box(w,4.2,7.5,MAT.private,x,2.1,z);const r=roof(x,z,w,7.5,2.7);r.material=MAT.privateRoof;}
 privateHouse(-31,-21,9);privateHouse(-19,-23,8.5);
