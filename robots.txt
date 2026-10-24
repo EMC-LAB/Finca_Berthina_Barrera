@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://emc-lab.github.io/Finca_Berthina_Barrera/sitemap.xml
