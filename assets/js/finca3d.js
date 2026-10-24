@@ -55,8 +55,9 @@ path([[-22,-7],[-19,-16],[-13,-20],[-4,-20],[5,-20],[25,-20],[36,-19],[42,-10]],
 // Entrance avenue unchanged. Swap the two physical buildings and markers only.
 // Portón now occupies the former chapel point.
 path([[-52,-27],[-47,-27],[-42,-24]],6,MAT.path);
-box(.8,5,1.5,MAT.brick,-42.5,2.5,-9);box(.8,5,1.5,MAT.brick,-37.5,2.5,-9);
-box(4,3,.5,MAT.wood,-40,2,-9,'entrada');
+// Gate remains centered at (-40,-9): rotate the façade 90° to face the approach.
+box(1.5,5,.8,MAT.brick,-40,2.5,-11.5);box(1.5,5,.8,MAT.brick,-40,2.5,-6.5);
+box(.5,3,4,MAT.wood,-40,2,-9,'entrada');
 // Capilla now occupies the former gate point, retaining its original visual treatment.
 box(8,4.7,8,MAT.brick,-46,2.35,-25,'capilla');dome(4.1,-46,4.8,-25,'capilla');
 cylinder(.7,.7,1.6,MAT.wall,-46,8.6,-25);dome(.72,-46,9.4,-25);
@@ -103,10 +104,67 @@ const fallback=document.querySelector('#fincaFallback');fallback.hidden=true;
 const resizeObserver=new ResizeObserver(()=>render());resizeObserver.observe(host);
 placeCamera();
 const raycaster=new THREE.Raycaster();const cursor=new THREE.Vector2();
-canvas.addEventListener('pointerdown',e=>{isDragging=true;moved=false;startX=e.clientX;startY=e.clientY;canvas.setPointerCapture(e.pointerId);});
-canvas.addEventListener('pointermove',e=>{if(!isDragging)return;const dx=e.clientX-startX,dy=e.clientY-startY;if(Math.abs(dx)+Math.abs(dy)>3)moved=true;azimuth-=dx*.007;elevation=Math.max(.35,Math.min(1.45,elevation+dy*.005));startX=e.clientX;startY=e.clientY;placeCamera();});
-canvas.addEventListener('pointerup',e=>{if(!moved){const rect=canvas.getBoundingClientRect();cursor.x=(e.clientX-rect.left)/rect.width*2-1;cursor.y=-(e.clientY-rect.top)/rect.height*2+1;raycaster.setFromCamera(cursor,camera);for(const hit of raycaster.intersectObjects(clickable,false)){if(hit.object.userData.zone){selectZone(hit.object.userData.zone);break;}}}isDragging=false;});
-canvas.addEventListener('pointercancel',()=>isDragging=false);
+// Stable one-finger orbit and two-finger zoom: track travel from the initial touch,
+// not from the previous frame (small, slow gestures were mistaken for taps).
+const activePointers=new Map();
+let pointerId=null,downX=0,downY=0,pinchDistance=0;
+const distance2=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+canvas.addEventListener('pointerdown',e=>{
+ e.preventDefault();
+ activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ try{canvas.setPointerCapture(e.pointerId)}catch{}
+ if(activePointers.size===1){
+  pointerId=e.pointerId;isDragging=true;moved=false;
+  downX=startX=e.clientX;downY=startY=e.clientY;
+ }else if(activePointers.size===2){
+  const [a,b]=[...activePointers.values()];
+  pinchDistance=distance2(a,b);isDragging=false;moved=true;
+ }
+});
+canvas.addEventListener('pointermove',e=>{
+ if(!activePointers.has(e.pointerId))return;
+ e.preventDefault();
+ activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(activePointers.size>=2){
+  const [a,b]=[...activePointers.values()];const d=distance2(a,b);
+  if(pinchDistance>0&&d>0){radius=Math.max(55,Math.min(160,radius*(pinchDistance/d)));placeCamera();}
+  pinchDistance=d;return;
+ }
+ if(e.pointerId!==pointerId||!isDragging)return;
+ const dx=e.clientX-startX,dy=e.clientY-startY;
+ if(Math.hypot(e.clientX-downX,e.clientY-downY)>5)moved=true;
+ azimuth-=dx*.008;elevation=Math.max(.35,Math.min(1.45,elevation+dy*.006));
+ startX=e.clientX;startY=e.clientY;
+ if(dx!==0||dy!==0)placeCamera();
+});
+canvas.addEventListener('pointerup',e=>{
+ if(!activePointers.has(e.pointerId))return;
+ const tap=activePointers.size===1&&pointerId===e.pointerId&&!moved&&Math.hypot(e.clientX-downX,e.clientY-downY)<=5;
+ if(tap){
+  const rect=canvas.getBoundingClientRect();
+  cursor.x=(e.clientX-rect.left)/rect.width*2-1;cursor.y=-(e.clientY-rect.top)/rect.height*2+1;
+  raycaster.setFromCamera(cursor,camera);
+  for(const hit of raycaster.intersectObjects(clickable,false)){
+   if(hit.object.userData.zone){selectZone(hit.object.userData.zone);break;}
+  }
+ }
+ activePointers.delete(e.pointerId);
+ try{if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId)}catch{}
+ if(activePointers.size===1){
+  const [id,p]=[...activePointers.entries()][0];pointerId=id;
+  downX=startX=p.x;downY=startY=p.y;isDragging=true;moved=true;pinchDistance=0;
+ }else if(activePointers.size===0){
+  isDragging=false;pointerId=null;pinchDistance=0;
+ }
+});
+canvas.addEventListener('pointercancel',e=>{
+ activePointers.delete(e.pointerId);isDragging=false;moved=true;pointerId=null;pinchDistance=0;
+});
+canvas.addEventListener('lostpointercapture',e=>{
+ if(activePointers.has(e.pointerId)){
+  activePointers.delete(e.pointerId);isDragging=false;moved=true;pointerId=null;pinchDistance=0;
+ }
+});
 canvas.addEventListener('wheel',e=>{e.preventDefault();radius=Math.max(55,Math.min(160,radius+Math.sign(e.deltaY)*6));placeCamera();},{passive:false});
 const btn=(selector,fn)=>document.querySelector(selector)?.addEventListener('click',fn);
 btn('#viewLeft',()=>{azimuth-=.24;placeCamera()});btn('#viewRight',()=>{azimuth+=.24;placeCamera()});btn('#viewPlus',()=>{radius=Math.max(55,radius-9);placeCamera()});btn('#viewMinus',()=>{radius=Math.min(160,radius+9);placeCamera()});btn('#viewReset',()=>{azimuth=.55;elevation=.93;radius=120;selectZone('entrada');placeCamera()});
