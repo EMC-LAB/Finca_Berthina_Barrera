@@ -10,7 +10,8 @@ Sitio web estático, responsivo y organizado con arquitectura SILO real para **F
 - `/experiencias/` Tipos de evento y costos históricos **pendientes de aprobación**
 - `/cotizar/` Preparador de mensaje de cotización. **No envía datos a un servidor**.
 - `/disponibilidad/` Calendario consultivo. **NO está sincronizado en tiempo real**.
-- `/visita-3d/` Maqueta conceptual interactiva, no a escala
+- `/visita-3d/` Maqueta tridimensional interactiva y orientativa, con recorridos conectados (3D por Three.js + esquema alternativo cuando no se descarga la librería), no a escala
+- `/contacto/` Canales de contacto: Messenger activo, WhatsApp oficial preparado pero pendiente de número
 - `/ubicacion/` Enlace a indicaciones de Google Maps
 
 ## Publicación en GitHub Pages
@@ -27,7 +28,7 @@ Los archivos optimizados están en `assets/img/`. Son fotos proporcionadas por a
 
 ## Cotización y WhatsApp
 
-El teléfono oficial todavía no está confirmado. `cotizar/` permite preparar y copiar una solicitud o abrir Facebook para enviarla. **No publicamos el número personal de SIE como número oficial de la finca**. Cuando exista el teléfono, se integra un `wa.me/52...` con el mensaje codificado.
+El teléfono oficial todavía no está confirmado. `cotizar/` permite preparar y copiar una solicitud o abrir Facebook para enviarla. **No publicamos el número personal de SIE como número oficial de la finca**. Cuando exista el teléfono, se configura **una sola variable** `officialWhatsApp` en `assets/js/site.js` (solo dígitos, con 52 al inicio): los botones y el formulario activarán `wa.me` automáticamente.
 
 ## Disponibilidad
 
@@ -60,3 +61,11 @@ Sergio: mantenimiento lunes-sábado 09:00–18:00. Dirección y autorización co
 - WhatsApp de la finca y calendario con backend real
 - Video profesional con permisos de uso de imagen
 - Recorrido 3D fiel tras levantamiento topográfico y fotos 360°
+
+## Actualización de menú y maqueta
+
+- Menú aprobado de 8 tarjetas accesible al tocar el logo, igual en escritorio y móvil; cada tarjeta enlaza a una página SILO real.
+- Maqueta 3D no fotogramétrica, con rutas para autos y senderos peatonales alrededor del jardín, capilla, fuente, alberca sin servicio, baños, pasillo, cocina y salón **conectados**.
+- Las dos casas residenciales se representan con material neutro sin datos personales ni botones de reserva.
+- La posición exacta de las zonas se ajustará con dron, medidas y evidencias, sin presentarse como plano arquitectónico.
+- La página `/contacto/` y el botón flotante no usan el número empresarial SIE; el enlace WA directo sigue **sin configurar** hasta recibir el número oficial.

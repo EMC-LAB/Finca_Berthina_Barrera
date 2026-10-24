@@ -5,3 +5,80 @@
 /* Consistent premium gold accents on every carousel and panoramic detail */
 .carousel{border:3px solid #c9a05c;border-radius:7px;box-shadow:0 0 0 1px #f4e4a4,0 18px 42px #59401526,0 0 23px #d5ac5d2e}
 .interior-hero{border-bottom:2px solid var(--gold)}
+
+/* V2 — approved immersive mega menu, matches Finca Berthina's dark visual language */
+.site-header{background:#2b2422;color:#f7e7cd;border-bottom:1px solid #513c36;position:sticky;top:0;z-index:1100;backdrop-filter:none}
+.topbar{background:#422629;color:#e8c19a;letter-spacing:.19em}
+.nav-wrap{height:104px}
+.brand-trigger{appearance:none;text-align:left;border:0;background:transparent;color:inherit;cursor:pointer;width:max-content;padding:0;display:flex;align-items:center;gap:18px;min-width:0}
+.brand-trigger:focus-visible,.mega-tile:focus-visible,.mega-close:focus-visible{outline:3px solid #f0cc85;outline-offset:4px}
+.brand-trigger>img{width:73px;height:73px;border:2px solid #d0a458;border-radius:50%;box-shadow:0 0 0 3px #d0a4582e,0 0 26px #c49a623f}
+.brand-label{display:flex;flex-direction:column;gap:4px}
+.brand-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.93rem;font-weight:700;line-height:1;letter-spacing:.05em;white-space:nowrap}
+.brand-label small{letter-spacing:.08em;font-size:.78rem;color:#c3ada3}
+.brand-trigger[aria-expanded="true"] .brand-label small{color:#f1c073}
+.header-tool{border:1px solid #624b44;color:#f5eee0;background:#352b28;padding:10px 15px;border-radius:40px;font-size:.83rem;white-space:nowrap;min-height:42px}
+.header-tool:hover{border-color:#e6b66b;background:#47332b}
+.header-quote{background:#73373a;color:#fff7e8;min-height:48px;padding:12px 26px;border:1px solid #73373a}
+.header-quote:hover{background:#934d47}
+.mega-menu[hidden]{display:none!important}
+.mega-menu{display:block;background:#302624;color:#f8ecd8;border-top:1px solid #483634;border-bottom:1px solid #b89351;padding:30px 0 38px;box-shadow:0 22px 30px #19100d55;animation:megaIn .24s ease both}
+@keyframes megaIn{from{opacity:.4;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.mega-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:19px}
+.mega-title .eyebrow{color:#cfa36e}
+.mega-title .eyebrow:before{display:none}
+.mega-close{color:#fff0e1;background:transparent;border:0;font-size:2.5rem;font-weight:300;line-height:1;padding:0 9px}
+.mega-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.mega-tile{display:flex;align-items:center;gap:19px;border:1px solid #69524c;background:#271f1e;padding:23px 22px;min-height:112px;transition:border-color .2s,background .2s,transform .2s;position:relative}
+.mega-tile:hover{border-color:#d4a449;transform:translateY(-3px);background:#342722}
+.tile-icon{width:35px;flex:none;color:#d3a04a;font-size:1.65rem;text-align:center}
+.mega-tile>span:nth-child(2){display:flex;flex-direction:column;gap:7px;min-width:0}
+.mega-tile strong{font:700 1.65rem/1.1 'Cormorant Garamond',Georgia,serif;color:#fdf4e7}
+.mega-tile small{color:#c6b3a8;font-size:.71rem;line-height:1.35}
+.tile-arr{opacity:0;position:absolute;right:14px;top:12px;color:#e2ad56;transition:opacity .2s}
+.mega-tile:hover .tile-arr{opacity:1}
+.mega-contact{display:flex;justify-content:space-between;align-items:center;gap:15px;padding-top:20px;color:#d5c2b6;font-size:.84rem}
+.mega-contact a{color:#eac07e;font-weight:700}
+.contact-float{position:fixed;z-index:950;right:22px;bottom:24px;display:flex;align-items:center;gap:10px;color:#fff8e9;background:#37664c;border:2px solid #c49b51;border-radius:36px;padding:12px 17px;box-shadow:0 8px 30px #08180c70;transition:transform .18s;white-space:nowrap;font-weight:700;font-size:.78rem}
+.contact-float:hover{transform:translateY(-3px);background:#295a41}
+.contact-float>span:first-child{font-size:1.4rem;line-height:1}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.contact-channels{padding:27px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.contact-method{padding:22px 0;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:flex-start}
+.contact-method-icon{color:#b18649;font-size:1.7rem;min-width:32px}
+.contact-method strong{font-size:1.06rem}
+.contact-method .btn{margin-top:6px}
+.wa-status{font-size:.75rem;color:var(--muted);margin-top:9px}
+@media(max-width:1050px){.mega-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:750px){.nav-wrap{height:76px}.brand-trigger>img{width:53px;height:53px}.brand-name{font-size:1.35rem}.brand-label small{font-size:.65rem}.header-tool{padding:8px 10px}.header-tool span{display:none}.header-quote{padding:9px 12px;font-size:.62rem;min-height:38px}.mega-menu{padding:22px 0}.mega-tile{min-height:86px;padding:16px 12px;gap:8px}.mega-tile strong{font-size:1.28rem}.tile-icon{font-size:1.2rem;width:23px}.mega-tile small{font-size:.6rem}.contact-layout{grid-template-columns:1fr;gap:30px}.contact-float-text{display:none}.contact-float{right:13px;bottom:13px;width:52px;height:52px;justify-content:center;padding:0;border-radius:50%}}
+@media(max-width:420px){.brand-trigger{gap:7px}.brand-trigger>img{width:44px;height:44px}.brand-name{font-size:1.13rem}.brand-label small{font-size:.6rem}.nav-actions{gap:5px}.header-tool{min-width:33px;min-height:33px;padding:4px 7px}.header-quote{padding:6px 9px;font-size:.57rem;min-height:33px}.mega-grid{gap:8px}.mega-tile{min-height:96px;padding:12px 8px}.mega-tile strong{font-size:1.18rem}}
+/* True 3D interactive site plan, with usable schematic fallback */
+.walkthrough-controls{display:flex;gap:40px;align-items:end;justify-content:space-between;margin:45px 0 24px}
+.walkthrough-controls h2{font-size:clamp(2.4rem,4vw,4rem)}.walkthrough-controls p{max-width:600px}
+.walkthrough-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.filter-spot{background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:10px 16px;border-radius:25px;font-size:.75rem;font-weight:700}
+.filter-spot.active{background:#63412c;color:#fff;border-color:#b9904d}
+.model-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(265px,.72fr);gap:22px}
+.webgl-stage{position:relative;min-height:570px;background:radial-gradient(circle at 35% 12%,#728f82 0%,#274b3b 75%,#13261e 100%);border:2px solid #c29b54;border-radius:17px;overflow:hidden;box-shadow:0 20px 60px #19301740;touch-action:pan-y}
+#fincaCanvas{display:block;position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.model-top-label{position:absolute;top:15px;left:20px;z-index:2;pointer-events:none;color:#fbe6b7;font:700 1.05rem/1.2 'Cormorant Garamond',serif;letter-spacing:.13em;text-shadow:0 2px 8px #0b1c1a}
+.model-top-label small{display:block;font:500 .57rem 'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.model-labels{position:absolute;inset:0;pointer-events:none;z-index:2}
+.area-marker{position:absolute;pointer-events:auto;transform:translate(-50%,-50%);background:#fbf4dfed;color:#292b22;box-shadow:0 3px 10px #0d1b13ab;border:1px solid #d1af72;border-radius:7px;font:700 .58rem/1.15 'DM Sans',sans-serif;padding:6px 9px;white-space:nowrap;transition:background .18s,opacity .18s;cursor:pointer}
+.area-marker:hover,.area-marker.selected{background:#dfb96b;color:#202017;outline:2px solid #fff1c3}
+.area-marker.private{background:#e6c0b7ee}.area-marker.closed{background:#bbbac0ee}
+.model-top-label,.three-tools{user-select:none}
+.viewer-tools.three-tools{position:absolute;z-index:3;bottom:15px;left:50%;transform:translateX(-50%);display:flex;justify-content:center;max-width:calc(100% - 20px);flex-wrap:wrap}
+.viewer-tools.three-tools button{white-space:nowrap}
+.model-details{background:var(--panel);border:1px solid var(--line);padding:27px 23px;border-radius:12px;display:flex;flex-direction:column;align-items:flex-start}
+.model-details h3{font-size:2.1rem;margin-top:12px}.model-details .btn{max-width:100%;margin-top:10px}
+.model-info-photo{width:100%;height:183px;margin:12px 0 16px}
+.model-info-photo img{width:100%;height:100%;object-fit:cover}
+.model-explainer{margin-top:auto;padding-top:30px}
+.model-book{margin-top:15px!important;width:100%}
+.model-legend{display:flex;flex-wrap:wrap;gap:22px;margin-top:16px;font-size:.74rem;color:var(--muted)}
+.model-legend span{display:flex;gap:7px;align-items:center}.legend-dot{display:inline-block;border-radius:3px;background:#b7764d;width:14px;height:14px}.legend-dot.private{background:#c58f90}.legend-dot.closed{background:#8d9aa0}.legend-dot.routes{background:#e2c993}
+.finca-fallback{position:absolute;inset:0;display:grid;place-items:center;z-index:1}.finca-fallback svg{width:100%;height:100%;object-fit:contain}
+.finca-fallback[hidden]{display:none}
+@media(max-width:1020px){.model-layout{grid-template-columns:1fr}.webgl-stage{min-height:510px}.model-details{display:grid;grid-template-columns:1fr 200px;align-items:center;column-gap:24px}.model-details .eyebrow,.model-details h3,.model-details p{grid-column:1}.model-info-photo{grid-column:2;grid-row:1/5;height:150px}.model-details .btn{width:max-content}.model-explainer{padding-top:8px}}
+@media(max-width:640px){.walkthrough-controls{display:block}.model-details{display:block}.model-info-photo{height:160px}.webgl-stage{min-height:450px}.area-marker{font-size:.48rem;padding:3px 5px}.model-top-label{left:10px;font-size:.86rem}.model-top-label small{font-size:.48rem}.three-tools{gap:4px}.three-tools button{padding:5px 6px;font-size:.6rem}}
